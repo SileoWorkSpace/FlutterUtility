@@ -36,6 +36,10 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
   video_player: ^2.8.3
+  speech_to_text: ^6.6.1
+  avatar_glow: ^3.0.1
+  quick_actions: ^1.0.7
+  flutter_phone_direct_caller: ^2.1.1
 
 dev_dependencies:
   flutter_test:

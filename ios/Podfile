@@ -42,3 +42,13 @@ post_install do |installer|
     flutter_additional_ios_build_settings(target)
   end
 end
+
+# Speech to Text
+target.build_configurations.each do |config|
+  config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
+    '$(inherited)',
+    # dart: PermissionGroup.microphone
+    'PERMISSION_MICROPHONE=1',
+  ]
+end
+# Speech to Text

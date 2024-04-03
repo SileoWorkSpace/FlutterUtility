@@ -47,5 +47,11 @@
 	<true/>
 	<key>NSAllowsArbitraryLoads</key>
     <true/>
+	<!-- Speech to text -->
+	<key>NSMicrophoneUsageDescription</key>
+    <string>microphone</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+    <string>SpeechRecognition</string>
+	<!-- Speech to text -->
 </dict>
 </plist>

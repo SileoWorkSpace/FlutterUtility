@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutterutility/hero_animation/hero_page_one.dart';
 import 'package:flutterutility/sliver_app/sliver_app_bar_video.dart';
+import 'package:flutterutility/speech_to_text/speech_to_text_search.dart';
+import 'package:quick_actions/quick_actions.dart';
 
 void main() {
+  debugPaintSizeEnabled = false;
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  static final navigatorKey = GlobalKey<NavigatorState>();
   const MyApp({super.key});
 
   @override
@@ -14,6 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
+      navigatorKey: navigatorKey,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
@@ -33,6 +40,34 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  QuickActions quickActions = const QuickActions();
+
+  @override
+  void initState() {
+    super.initState();
+    quickActions.initialize((String shortcutType) {
+      if (shortcutType == 'hero_animation') {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const HeroPageOne()));
+      }
+      if (shortcutType == 'speech_to_text') {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const HeroPageOne()));
+      }
+    });
+
+    quickActions.setShortcutItems([
+      const ShortcutItem(
+          type: 'hero_animation',
+          localizedTitle: 'Hero animation',
+          icon: "icon1"),
+      const ShortcutItem(
+          type: 'speech_to_text',
+          localizedTitle: 'Speech To Text',
+          icon: "icon1"),
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,6 +95,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => const SliverVideo()));
+              }),
+              gridItem("Speech To Text", Icons.record_voice_over_rounded,
+                  () async {
+                FlutterPhoneDirectCaller.callNumber("8630463472");
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => const SpeechToTextSearch()));
               }),
             ]));
   }
