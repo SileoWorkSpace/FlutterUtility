@@ -40,6 +40,13 @@ dependencies:
   avatar_glow: ^3.0.1
   quick_actions: ^1.0.7
   flutter_phone_direct_caller: ^2.1.1
+  firebase_core: ^2.28.0
+  google_sign_in: ^6.2.1
+  firebase_auth: ^4.19.0
+  flutter_facebook_auth: ^6.0.4
+  google_maps_flutter: ^2.2.8
+  fluster: ^1.2.0
+  flutter_map: ^6.1.0
 
 dev_dependencies:
   flutter_test:
