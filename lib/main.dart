@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:flutterutility/go_route/router/app_route_config.dart';
+import 'package:flutterutility/go_route/router/app_route_name.dart';
 import 'package:flutterutility/hero_animation/hero_page_one.dart';
 import 'package:flutterutility/map/map_view.dart';
 import 'package:flutterutility/sliver_app/sliver_app_bar_video.dart';
 import 'package:flutterutility/speech_to_text/speech_to_text_search.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:go_router/go_router.dart';
 import 'package:quick_actions/quick_actions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -34,16 +36,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      navigatorKey: navigatorKey,
+      routerConfig: MyAppRoute().router,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MapView(),
-      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -114,12 +114,10 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     quickActions.initialize((String shortcutType) {
       if (shortcutType == 'hero_animation') {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const HeroPageOne()));
+        GoRouter.of(context).pushNamed(AppRouteName.heroAnimationScreen);
       }
       if (shortcutType == 'speech_to_text') {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const HeroPageOne()));
+        GoRouter.of(context).pushNamed(AppRouteName.speechToTextScreen);
       }
     });
 
@@ -138,63 +136,38 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Flutter Utility"),
-      ),
-      body: Column(
-        children: [
-          TextButton(
-              onPressed: () {
-                signup(context);
-              },
-              child: const Text("Google Signin")),
-          const SizedBox(height: 10),
-          TextButton(
-              onPressed: () {
-                signInWithFacebook();
-              },
-              child: const Text("Facbook Signin")),
-        ],
-      ),
-      // body: Column(
-      //   mainAxisSize: MainAxisSize.min,
-      //   children: [
-      //     GridView(
-      //         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-      //           crossAxisCount: 3, // number of items in each row
-      //           mainAxisSpacing: 8.0, // spacing between rows
-      //           crossAxisSpacing: 8.0, // spacing between columns
-      //         ),
-      //         padding: const EdgeInsets.all(18),
-      //         // itemCount: ,
-      //         children: [
-      //           gridItem("Hero animation", Icons.animation, () {
-      //             Navigator.push(
-      //                 context,
-      //                 MaterialPageRoute(
-      //                     builder: (context) => const HeroPageOne()));
-      //           }),
-      //           gridItem("Sliver App Video", Icons.video_collection_rounded,
-      //               () {
-      //             Navigator.push(
-      //                 context,
-      //                 MaterialPageRoute(
-      //                     builder: (context) => const SliverVideo()));
-      //           }),
-      //           gridItem("Speech To Text", Icons.record_voice_over_rounded,
-      //               () async {
-      //             FlutterPhoneDirectCaller.callNumber("8630463472");
-      //             // Navigator.push(
-      //             //     context,
-      //             //     MaterialPageRoute(
-      //             //         builder: (context) => const SpeechToTextSearch()));
-      //           }),
-      //         ]),
-
-      //   ],
-      // )
-    );
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: const Text("Flutter Utility"),
+        ),
+        body: GridView(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3, // number of items in each row
+              mainAxisSpacing: 8.0, // spacing between rows
+              crossAxisSpacing: 8.0, // spacing between columns
+            ),
+            padding: const EdgeInsets.all(18),
+            // itemCount: ,
+            children: [
+              gridItem("Hero animation", Icons.animation, () {
+                GoRouter.of(context)
+                    .pushNamed(AppRouteName.heroAnimationScreen);
+              }),
+              gridItem("Sliver App Video", Icons.video_collection_rounded, () {
+                GoRouter.of(context)
+                    .pushNamed(AppRouteName.sliverAppVideoScreen);
+              }),
+              gridItem("Speech To Text", Icons.record_voice_over_rounded,
+                  () async {
+                GoRouter.of(context).pushNamed(AppRouteName.speechToTextScreen);
+              }),
+              gridItem("SOS Direct Calling", Icons.call, () async {
+                FlutterPhoneDirectCaller.callNumber("8630463472");
+              }),
+              gridItem("Go Route", Icons.navigation, () async {
+                GoRouter.of(context).pushNamed(AppRouteName.goRouteHomeScreen);
+              }),
+            ]));
   }
 
   Widget gridItem(String name, IconData iconData, dynamic navigate) {
