@@ -13,6 +13,7 @@ import 'package:flutterutility/map/map_view.dart';
 import 'package:flutterutility/sliver_app/sliver_app_bar_video.dart';
 import 'package:flutterutility/speech_to_text/speech_to_text_search.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:quick_actions/quick_actions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
